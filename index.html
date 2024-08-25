@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login and Chat</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Chat</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Login Section -->
-    <div id="loginSection" class="login-section">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <label for="userID">User ID:</label>
-        <input type="text" id="userID" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" required>
-        <button type="submit">Login</button>
-      </form>
-      <p id="loginError" class="error-message"></p>
-    </div>
-
-    <!-- Chat Section -->
-    <div id="chatSection" class="chat-section hidden">
-      <div class="chat-box">
-        <div id="chatOutput" class="chat-output"></div>
-        <div class="chat-input">
-          <input type="text" id="chatMessage" placeholder="Type a message..." required>
-          <button id="sendMessage">Send</button>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="userID">User ID:</label>
+                <input type="text" id="userID" name="userID" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginError" class="error-message"></p>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <script src="script.js"></script>
+        <!-- Chat Section -->
+        <div id="chatSection" class="chat-section hidden">
+            <div class="chat-box">
+                <div id="chatOutput" class="chat-output"></div>
+                <div class="chat-input">
+                    <input type="text" id="chatMessage" placeholder="Type a message..." required>
+                    <button id="sendMessage">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
