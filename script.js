@@ -9,27 +9,28 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         return;
     }
 
-    // Log the data to check what's being sent
-    const payload = {
-        "userID": userID,
-        "password": password
-    };
-
-    console.log("Sending Payload:", payload);
+    console.log("Sending Payload - UserID: ", userID, "Password: ", password);
 
     fetch('https://hook.eu2.make.com/h2j1iwxiktb1bs1arhqxymbm38iau4ef', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+            "userID": userID,
+            "password": password
+        })
     })
     .then(response => {
-        console.log("Raw Response:", response);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
+        // Check if the response is valid JSON
+        return response.text().then(text => {
+            try {
+                // Attempt to parse JSON
+                return JSON.parse(text);
+            } catch (error) {
+                throw new Error("Response is not valid JSON: " + text);
+            }
+        });
     })
     .then(data => {
         console.log("Parsed Response from Webhook:", data);
