@@ -3,29 +3,26 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
 
   const userID = document.getElementById('userID').value;
   const password = document.getElementById('password').value;
-  const loginError = document.getElementById('loginError');
 
-  // Mock validation logic
-  if (userID === 'testuser' && password === 'password') {
-    document.getElementById('loginSection').classList.add('hidden');
-    document.getElementById('chatSection').classList.remove('hidden');
-    loginError.textContent = '';
-  } else {
-    loginError.textContent = 'Invalid login credentials.';
-  }
-});
-
-document.getElementById('sendMessage').addEventListener('click', function () {
-  const chatOutput = document.getElementById('chatOutput');
-  const chatMessage = document.getElementById('chatMessage').value;
-
-  if (chatMessage.trim() !== '') {
-    const messageElement = document.createElement('p');
-    messageElement.textContent = `You: ${chatMessage}`;
-    chatOutput.appendChild(messageElement);
-    chatMessage.value = '';  // Clear input
-    chatOutput.scrollTop = chatOutput.scrollHeight;  // Auto scroll to bottom
-
-    // Here you can add logic to send the message to the AI chatbot (API call)
-  }
+  // Send the login data to Make Webhook
+  fetch('https://hook.eu2.make.com/h2j1iwxiktb1bs1arhqxymbm38iau4ef', {  // Replace with your Webhook URL
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "userID": userID,
+      "password": password
+    })
+  })
+  .then(response => response.json())  // Convert response to JSON
+  .then(data => {
+    if (data.status === 'success') {  // If login is successful
+      document.getElementById('loginSection').classList.add('hidden');  // Hide login
+      document.getElementById('chatSection').classList.remove('hidden');  // Show chat box
+    } else {
+      document.getElementById('loginError').textContent = 'Invalid login credentials.';  // Show error
+    }
+  })
+  .catch(error => console.error('Error:', error));  // Handle errors
 });
