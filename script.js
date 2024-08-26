@@ -1,16 +1,20 @@
 document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+    e.preventDefault();  // Prevent form from refreshing the page
 
+    // Get user inputs
     const userID = document.getElementById('userID').value.trim();
     const password = document.getElementById('password').value.trim();
 
+    // Check if fields are empty
     if (!userID || !password) {
         document.getElementById('loginError').textContent = 'Please enter both User ID and Password.';
         return;
     }
 
+    // Display the payload in the console for debugging
     console.log("Sending Payload - UserID: ", userID, "Password: ", password);
 
+    // Send login data to the Webhook
     fetch('https://hook.eu2.make.com/55jos9qtaruodturdjj1aqnjpbt2gtfg', {
         method: 'POST',
         headers: {
@@ -25,7 +29,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         // Check if the response is valid JSON
         return response.text().then(text => {
             try {
-                // Attempt to parse JSON
+                // Parse JSON if it's a valid response
                 return JSON.parse(text);
             } catch (error) {
                 throw new Error("Response is not valid JSON: " + text);
@@ -33,13 +37,17 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         });
     })
     .then(data => {
+        // Handle the response from the Webhook
         console.log("Parsed Response from Webhook:", data);
+
         if (data.status === 'success') {
+            // If login is successful, hide the login form and show the chat section
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('chatSection').classList.remove('hidden');
         } else {
+            // If login fails, display the error message
             document.getElementById('loginError').textContent = 'Invalid login credentials.';
         }
     })
-    .catch(error => console.error('Fetch Error:', error));
+    .catch(error => console.error('Fetch Error:', error));  // Log any errors
 });
